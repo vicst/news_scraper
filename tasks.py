@@ -1,7 +1,6 @@
 from RPA.Browser.Selenium import Selenium
 from datetime import date, datetime
 import os
-import sys
 import win32com.client
 from pages import main_page
 from RPA.Excel.Files import Files as Excel
@@ -17,11 +16,11 @@ class scrape_news:
         self.requested_period = None
         self.current_date = datetime.now().strftime("%m%d%y_%M")
         self.driver = Selenium()
-        self.reports_folder_path = os.path.join((os.path.split(sys.argv[0])[0]),"output", "Reports")
-        self.images_download_folder_path = os.path.join((os.path.split(sys.argv[0])[0]),"output", "Images")
-        self.report_path = os.path.join((os.path.split(sys.argv[0])[0]), self.reports_folder_path,
+        self.reports_folder_path = os.path.join(os.path.dirname(__file__),"output", "Reports")
+        self.images_download_folder_path = os.path.join(os.path.dirname(__file__),"output", "Images")
+        self.report_path = os.path.join(os.path.dirname(__file__), self.reports_folder_path,
                                         "report_{}.xlsx".format(self.current_date))
-        self.input_files_folder_path = os.path.join((os.path.split(sys.argv[0])[0]), "input_files")
+        self.input_files_folder_path = os.path.join(os.path.dirname(__file__), "input_files")
         self.input_file = input_file
         self.input_file_path =  os.path.join(self.input_files_folder_path, self.input_file)
         self.report_columns = ["title", "date", "description", "picture_filename", "search_phrases_count",

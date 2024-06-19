@@ -1,0 +1,26 @@
+1718815528281	geckodriver	INFO	Listening on 127.0.0.1:51261
+1718815531365	mozrunner::runner	INFO	Running command: "C:\\Users\\victo\\.cache\\selenium\\firefox\\win64\\127.0.1\\firefox.exe" "--marionette" "--remote-debuggin ... 2" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\victo\\AppData\\Local\\Temp\\rust_mozprofileo0zCJr"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+Dynamically enable window occlusion 0
+1718815532126	Marionette	INFO	Marionette enabled
+1718815532245	Marionette	INFO	Listening on port 51274
+WebDriver BiDi listening on ws://127.0.0.1:51262
+Read port: 51274
+1718815532464	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+DevTools listening on ws://127.0.0.1:51262/devtools/browser/94fba071-21fa-4f6c-a05a-9db476b42f0b
+JavaScript warning: https://www.aljazeera.com/thirdparty/splunk-otel-web.min.js, line 2: Script terminated by timeout at:
+aa<@https://www.aljazeera.com/thirdparty/splunk-otel-web.min.js:2:112184
+value@https://www.aljazeera.com/thirdparty/splunk-otel-web.min.js:2:112785
+t.prototype._flushOneBatch/Yr</<@https://www.aljazeera.com/thirdparty/splunk-otel-web.min.js:2:56263
+value@https://www.aljazeera.com/thirdparty/splunk-otel-web.min.js:2:149867
+t.prototype.with@https://www.aljazeera.com/thirdparty/splunk-otel-web.min.js:2:12675
+t.prototype._flushOneBatch/Yr<@https://www.aljazeera.com/thirdparty/splunk-otel-web.min.js:2:56218
+t.prototype._flushOneBatch@https://www.aljazeera.com/thirdparty/splunk-otel-web.min.js:2:56109
+t.prototype._flushAll/Yr<@https://www.aljazeera.com/thirdparty/splunk-otel-web.min.js:2:55915
+t.prototype._flushAll@https://www.aljazeera.com/thirdparty/splunk-otel-web.min.js:2:55795
+t.prototype.forceFlush@https://www.aljazeera.com/thirdparty/splunk-otel-web.min.js:2:55161
+e.prototype.onInit/this._visibilityChangeListener@https://www.aljazeera.com/thirdparty/splunk-otel-web.min.js:2:57679
+
+1718815551623	Marionette	INFO	Stopped listening on port 51274
+Dynamically enable window occlusion 1

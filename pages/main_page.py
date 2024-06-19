@@ -45,7 +45,7 @@ class MainPage():
 
     def open_news_website(self, url):
         try:
-            self.driver.open_browser(url=url)
+            self.driver.open_browser(url=url, browser="chrome")
             self.driver.maximize_browser_window()
             self.driver.wait_until_element_is_visible(locator=self._reject_cookies_selector, timeout=self.timeout)
             self.driver.click_element(locator=self._reject_cookies_selector)
