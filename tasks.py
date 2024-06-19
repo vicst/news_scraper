@@ -59,12 +59,13 @@ class scrape_news:
             excel_handler.insert_values_to_excel(news_info, row=self.main_page._news_count + 1)
             self.main_page._news_count += 1
             print(self.main_page._news_count)
-
-@task        
+      
 def main():
     scrape_news(input_file="FindNewsInput.xlsx" ,
                 url="https://www.aljazeera.com/").run_scrape()
 
+
+main()
 
 if __name__ == "__main__":
     main()
