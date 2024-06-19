@@ -61,7 +61,11 @@ class scrape_news:
             print(self.main_page._news_count)
 
         
- 
-scrape_news(input_file="FindNewsInput.xlsx" ,
-            url="https://www.aljazeera.com/").run_scrape()
+def main():
+    scrape_news(input_file="FindNewsInput.xlsx" ,
+                url="https://www.aljazeera.com/").run_scrape()
+
+
+if __name__ == "__main__":
+    main()
 
