@@ -60,7 +60,7 @@ class scrape_news:
             self.main_page._news_count += 1
             print(self.main_page._news_count)
 
-        
+@task        
 def main():
     scrape_news(input_file="FindNewsInput.xlsx" ,
                 url="https://www.aljazeera.com/").run_scrape()
