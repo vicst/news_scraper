@@ -2,8 +2,9 @@
 # https://github.com/robocorp/rcc/blob/master/docs/recipes.md#what-is-in-robotyaml
 
 tasks:
-  Browser Example:
+  Victor Stanescu:
     shell: python -m robocorp.tasks run tasks.py
+    entrypoint: tasks.py:main
 
 environmentConfigs:
   - environment_windows_amd64_freeze.yaml
