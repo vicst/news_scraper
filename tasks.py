@@ -6,9 +6,13 @@ from pages import main_page
 from RPA.Excel.Files import Files as Excel
 from utilities.custom_logger import customLogger as cl
 from utilities.excel_operations import ExcelHandler
+from robocorp.tasks import task
+from pathlib import Path
 
 
 class scrape_news:
+    _output_dir = Path(os.environ.get('ROBOT_ARTIFACTS'))
+
     def __init__(self, input_file, url) -> None:
         self.url = url
         self.category = None
@@ -16,9 +20,9 @@ class scrape_news:
         self.requested_period = None
         self.current_date = datetime.now().strftime("%m%d%y_%M")
         self.driver = Selenium()
-        self.reports_folder_path = os.path.join(os.path.dirname(__file__),"output", "Reports")
-        self.images_download_folder_path = os.path.join(os.path.dirname(__file__),"output", "Images")
-        self.report_path = os.path.join(os.path.dirname(__file__), self.reports_folder_path,
+        self.reports_folder_path = os.path.join(self._output_dir, "Reports")
+        self.images_download_folder_path = os.path.join(self._output_dir, "Images")
+        self.report_path = os.path.join(self.reports_folder_path,
                                         "report_{}.xlsx".format(self.current_date))
         self.input_files_folder_path = os.path.join(os.path.dirname(__file__), "input_files")
         self.input_file = input_file
@@ -59,14 +63,9 @@ class scrape_news:
             excel_handler.insert_values_to_excel(news_info, row=self.main_page._news_count + 1)
             self.main_page._news_count += 1
             print(self.main_page._news_count)
-      
+@task      
 def main():
     scrape_news(input_file="FindNewsInput.xlsx" ,
                 url="https://www.aljazeera.com/").run_scrape()
 
-
-main()
-
-if __name__ == "__main__":
-    main()
 
