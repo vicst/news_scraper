@@ -49,6 +49,7 @@ class MainPage():
             self.driver.maximize_browser_window()
             self.driver.wait_until_element_is_visible(locator=self._reject_cookies_selector, timeout=self.timeout)
             self.driver.click_element(locator=self._reject_cookies_selector)
+            self.log.info("Opened news website")
         except Exception as e:
             print(traceback.format_exc())
             self.log.error(f"Failed to open {url} : {traceback.format_exc()}")
@@ -78,6 +79,7 @@ class MainPage():
             try:
                 self.driver.wait_until_element_is_visible(locator=self._news_description_selector, timeout=self.timeout)
                 self.driver.find_element(locator=self._sort_selector)
+                self.log.info(f"Searched for {topic} in {category} category")
                 #break
             except:
                 self.log.error("Searched topic didn't load")
@@ -98,6 +100,7 @@ class MainPage():
                 self.driver.wait_until_element_is_visible(locator=self._sort_selector, timeout=self.timeout)
                 self.driver.wait_until_element_is_enabled(locator=self._sort_selector, timeout=self.timeout)
                 self.driver.select_from_list_by_label(self._sort_selector, sort_option)
+                self.log.info(f"Page was sorted by {sort_option}")
                 # Verify the selected option
                 # selected_option =  self.driver.get_selected_list_label(self._sort_selector)
                 # print(f"Selected option: {selected_option}")
@@ -146,6 +149,7 @@ class MainPage():
         valid_news_date = False
         if news_date == "": # Some of the news have empty values for date so we will consider them valid
             valid_news_date = True
+            self.log.info("Date is empty")
             return valid_news_date
         else:
             news_date = self.format_date(news_date=news_date)
@@ -168,6 +172,7 @@ class MainPage():
         elif "Published On" in news_date:
             date = datetime.strptime(news_date, "Published On %d %b %Y")
         else:
+            self.log.debug(f"Unknown date format {news_date}")
             print(news_date)
             date = ""
         return date

@@ -4,14 +4,16 @@ import os
 import win32com.client
 from pages import main_page
 from RPA.Excel.Files import Files as Excel
-from utilities.custom_logger import customLogger as cl
+from utilities import custom_logger as cl
 from utilities.excel_operations import ExcelHandler
 from robocorp.tasks import task
 from pathlib import Path
+import logging
 
 
 class scrape_news:
     _output_dir = Path(os.environ.get('ROBOT_ARTIFACTS'))
+    log = cl.customLogger(logging.DEBUG)
 
     def __init__(self, input_file, url) -> None:
         self.url = url
@@ -39,6 +41,7 @@ class scrape_news:
             
 
     def run_scrape(self):
+        self.log.info("===Process start===")
         self.read_requirements()
         if not os.path.exists(self.reports_folder_path):
             os.mkdir(self.reports_folder_path)
@@ -63,6 +66,7 @@ class scrape_news:
             excel_handler.insert_values_to_excel(news_info, row=self.main_page._news_count + 1)
             self.main_page._news_count += 1
             print(self.main_page._news_count)
+        self.log.info("===Process end===")
 @task      
 def main():
     scrape_news(input_file="FindNewsInput.xlsx" ,
