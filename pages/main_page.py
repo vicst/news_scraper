@@ -33,7 +33,6 @@ class MainPage():
     def __init__(self, timeout, images_download_folder_path):
         #self.driver = driver
         self.driver = Selenium()
-        self.driver.headless = True
         self.timeout = timeout
         self.images_download_folder_path = images_download_folder_path
     
@@ -49,7 +48,7 @@ class MainPage():
             chrome_options = {
                 "arguments": ["--headless"]
                 }
-            self.driver.open_browser(url=url, browser="chrome", options=chrome_options)
+            self.driver.open_browser(url=url, browser="chrome")
             #self.driver.maximize_browser_window()
             self.driver.wait_until_element_is_visible(locator=self._reject_cookies_selector, timeout=self.timeout)
             self.driver.click_element(locator=self._reject_cookies_selector)

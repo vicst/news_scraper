@@ -18,7 +18,7 @@ def customLogger(logLevel=logging.DEBUG, logs_dir_name="Logs"):
 
     """
     root_path = os.path.split(os.path.dirname(__file__))[0]
-    logs_dir = os.path.join(root_path, "output", logs_dir_name)
+    logs_dir = os.path.join(root_path, "output")
     #print("Logs will be saved to: " + logs_dir)
     # Create log dir if doesn't exists
     if not os.path.exists(logs_dir):

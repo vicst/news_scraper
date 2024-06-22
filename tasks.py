@@ -22,8 +22,8 @@ class scrape_news:
         self.requested_period = None
         self.current_date = datetime.now().strftime("%m%d%y_%M")
         self.driver = Selenium()
-        self.reports_folder_path = os.path.join(self._output_dir, "Reports")
-        self.images_download_folder_path = os.path.join(self._output_dir, "Images")
+        self.reports_folder_path = self._output_dir
+        self.images_download_folder_path = self._output_dir
         self.report_path = os.path.join(self.reports_folder_path,
                                         "report_{}.xlsx".format(self.current_date))
         self.input_files_folder_path = os.path.join(os.path.dirname(__file__), "input_files")
