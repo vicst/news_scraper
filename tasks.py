@@ -3,12 +3,13 @@ from datetime import date, datetime
 import os
 import win32com.client
 from pages import main_page
-from RPA.Excel.Files import Files as Excel
 from utilities import custom_logger as cl
 from utilities.excel_operations import ExcelHandler
 from robocorp.tasks import task
 from pathlib import Path
 import logging
+import traceback
+from robocorp import workitems
 
 
 class scrape_news:
@@ -33,16 +34,19 @@ class scrape_news:
                             "has_money"]
         self.main_page = main_page.MainPage(timeout=15, images_download_folder_path = self.images_download_folder_path)
         
-    def read_requirements(self):
-        input_info = ExcelHandler(filename=self.input_file_path).read_config()
-        self.topic =  input_info["topic"]
-        self.category = input_info["category"]
-        self.requested_period = input_info["number_of_months"]
-            
+    def read_requirements(self, work_item):
+        try:
+            self.topic =  work_item.payload["search phrase"]
+            self.category = work_item.payload["category"]
+            self.requested_period = work_item.payload["number of months"]
+        except KeyError as err:
+            work_item.fail("APPLICATION", code="MISSING_FIELD", message=str(err))
+            self.log.error(f"Failed to read work item {str(err)}" )
+            raise "Failed to read work item"
 
-    def run_scrape(self):
+    def run_scrape(self, work_item):
         self.log.info("===Process start===")
-        self.read_requirements()
+        self.read_requirements(work_item)
         if not os.path.exists(self.reports_folder_path):
             os.mkdir(self.reports_folder_path)
         if not os.path.exists(self.images_download_folder_path):
@@ -50,7 +54,7 @@ class scrape_news:
         xl = win32com.client.Dispatch("Excel.Application")
         xl.Quit()  # close excel if opened  
         
-        excel_handler = ExcelHandler(self.report_path)
+        excel_handler = ExcelHandler(file_path=self.report_path)
         self.main_page.open_news_website(url=self.url)
         self.main_page.search_news(category=self.category, topic=self.topic)
         self.main_page.sort_page("Date")
@@ -67,9 +71,19 @@ class scrape_news:
             self.main_page._news_count += 1
             print(self.main_page._news_count)
         self.log.info("===Process end===")
+
+scraper = scrape_news(input_file="FindNewsInput.xlsx" ,
+                url="https://www.aljazeera.com/")
 @task      
 def main():
-    scrape_news(input_file="FindNewsInput.xlsx" ,
-                url="https://www.aljazeera.com/").run_scrape()
+    for work_item in workitems.inputs:
+        try:
+            scraper.run_scrape(work_item)
+        except Exception as e:
+            work_item.fail("APPLICATION", code="FAILED_SCRAPE", message=str(e))
+            scraper.log.error(f"!!!Failed to run scrape!!! {traceback.format_exc()}")
 
 
+@task
+def producer():
+    ExcelHandler(file_path=scraper.input_file_path).load_work_items()
