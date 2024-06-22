@@ -1,7 +1,6 @@
 from RPA.Browser.Selenium import Selenium
 from datetime import date, datetime
 import os
-import win32com.client
 from pages import main_page
 from utilities import custom_logger as cl
 from utilities.excel_operations import ExcelHandler
@@ -51,8 +50,6 @@ class scrape_news:
             os.mkdir(self.reports_folder_path)
         if not os.path.exists(self.images_download_folder_path):
             os.mkdir(self.images_download_folder_path)
-        xl = win32com.client.Dispatch("Excel.Application")
-        xl.Quit()  # close excel if opened  
         
         excel_handler = ExcelHandler(file_path=self.report_path)
         self.main_page.open_news_website(url=self.url)
