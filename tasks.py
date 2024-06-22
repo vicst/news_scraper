@@ -44,7 +44,8 @@ class scrape_news:
             raise "Failed to read work item"
 
     def run_scrape(self, work_item):
-        self.log.info("===Process start===")
+        self.log.info(f"===Process start {self.topic} {self.category} {self.requested_period}===")
+        print(f"===Process start {self.topic} {self.category} {self.requested_period}===")
         self.read_requirements(work_item)
         if not os.path.exists(self.reports_folder_path):
             os.mkdir(self.reports_folder_path)
