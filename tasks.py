@@ -76,6 +76,7 @@ def main():
     for work_item in workitems.inputs:
         try:
             scraper.run_scrape(work_item)
+            work_item.done()
         except Exception as e:
             work_item.fail("APPLICATION", code="FAILED_SCRAPE", message=str(e))
             scraper.log.error(f"!!!Failed to run scrape!!! {traceback.format_exc()}")
