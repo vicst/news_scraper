@@ -52,7 +52,8 @@ class MainPage():
             # chrome_options = {
             #     "arguments": ["--headless"]
             #     }
-            self.driver.open_chrome_browser("about:blank", headless=True)
+            #self.driver.open_chrome_browser("about:blank", headless=True)
+            self.driver.open_chrome_browser("about:blank", headless=False)
             self.override_user_agent("Chrome/92.0.4515.159")
             self.driver.go_to(url=url)
             #self.driver.maximize_browser_window()
@@ -193,7 +194,11 @@ class MainPage():
         try:
             if self._news_count%10==0:
                 # Click show more results
-                self.driver.wait_until_element_is_visible(locator=self._show_more_selector, timeout=self.timeout)
+                try:
+                    self.driver.wait_until_element_is_visible(locator=self._show_more_selector, timeout=self.timeout)
+                except:
+                    self.log.info("No more pages. 'Show more' button not available")
+                    return {"has valid date":False} 
                 self.driver.click_element(locator=self._show_more_selector)
 
             self.update_dynamic_selectors()
