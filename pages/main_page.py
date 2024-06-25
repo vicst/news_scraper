@@ -43,12 +43,18 @@ class MainPage():
         self._img_selector = f"css:article.gc:nth-child({self._news_count}) > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > img:nth-child(1)"
 
 
+    def override_user_agent(self, user_agent):
+        parameters = {"userAgent": user_agent}
+        self.driver.execute_cdp("Network.setUserAgentOverride", parameters)
+
     def open_news_website(self, url):
         try:
-            chrome_options = {
-                "arguments": ["--headless"]
-                }
-            self.driver.open_browser(url=url, browser="chrome")
+            # chrome_options = {
+            #     "arguments": ["--headless"]
+            #     }
+            self.driver.open_chrome_browser("about:blank", headless=True)
+            self.override_user_agent("Chrome/92.0.4515.159")
+            self.driver.go_to(url=url)
             #self.driver.maximize_browser_window()
             self.driver.wait_until_element_is_visible(locator=self._reject_cookies_selector, timeout=self.timeout)
             self.driver.click_element(locator=self._reject_cookies_selector)
